@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>
+    <string name="go4lunch">Go4Lunch</string>
+    <string name="find">Find a nice restaurant and invite your co-workers for lunch!</string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCQqtTNs-BwXnWbWEQadfZ1ofvRoGHuSrI</string>
+
+</resources>
