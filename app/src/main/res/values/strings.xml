@@ -5,5 +5,6 @@
     <string name="todo">TODO</string>
     <string name="title_activity_maps">Map</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCQqtTNs-BwXnWbWEQadfZ1ofvRoGHuSrI</string>
+    <string name="facebook_app_id">[APP_ID]</string> <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
 
 </resources>
