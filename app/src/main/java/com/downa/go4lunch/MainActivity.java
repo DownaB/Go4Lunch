@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private FirebaseAuth fireBaseAuth;
     private GoogleSignInClient googleSignInClient;
-
-
+    int RC_SIGN_IN = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +44,32 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        SignInButton signInButton = binding.signInButtonGoogle;
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+
+        binding.signInButtonGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case binding.signInButtonGoogle:
+                        signIn();
+                        break;
+                }
+            }
+        });
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+
         fireBaseAuth = FirebaseAuth.getInstance();
 
-
+    }
         private void signIn(){
-            googleSignInClient = GoogleSignIn.getClient(this, gso);
+
             Intent signInIntent = googleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
         }
@@ -64,57 +79,27 @@ public class MainActivity extends AppCompatActivity {
 
             if (requestCode == RC_SIGN_IN){
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+               handleSignInResult(task);
+            }
+
+            private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
                 try{
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                    firebaseAuthWithGoogle(account.getIdToken());
-                } catch (ApiException e){
-                    Log.w(TAG, "Google sign in failed", e);
+                    GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+                    updateUI(account);
+                }catch (ApiException e){
+                    Log.w(TAG, "signInResult : failed code=" + e.getStatusCode());
+                    updateUI(null);
                 }
             }
         }
 
-        SignInButton signInButton = binding.signInButtonGoogle;
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-
-        binding.signInButtonGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()){
-                    case binding.signInButtonGoogle:
-                        signIn();
-                        break;
-                }
-            }
-        });
-    }
-
     @Override
     protected void onStart() {
+        super.onStart();
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
 
-        FirebaseUser currentUser = fireBaseAuth.getCurrentUser();
-        updateUI(currentUser);
-        super.onStart();
-    }
-
-    private void firebaseAuthWithGoogle(String idToken){
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        fireBaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "signInWithCredential : success");
-                    FirebaseUser user = fireBaseAuth.getCurrentUser();
-                    updateUI(user);
-                }else{
-                    Log.w(TAG, "signInWithCredentiel: failure", task.getException());
-                    updateUI(null);
-                }
-
-            }
-        });
     }
 
 }
