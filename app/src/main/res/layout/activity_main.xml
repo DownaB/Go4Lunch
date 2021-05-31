@@ -10,7 +10,8 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:src="@drawable/background2"
+    android:scaleType="centerCrop"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:contentDescription="@string/todo">
@@ -56,7 +57,7 @@
         />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button_google"
+        android:id="@+id/signInButtonGoogle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,5 +65,16 @@
         app:layout_constraintTop_toBottomOf="@id/find"
         android:padding="30dp"
        />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/signInButtonFacebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signInButtonGoogle"
+        android:padding="30dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
