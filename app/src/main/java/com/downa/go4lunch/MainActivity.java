@@ -97,14 +97,9 @@ public class MainActivity extends AppCompatActivity {
         binding.signInButtonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
-                    case binding.signInButtonGoogle:
                         signIn();
-                        break;
                 }
-            }
         });
-
     }
 
     private void signIn() {
