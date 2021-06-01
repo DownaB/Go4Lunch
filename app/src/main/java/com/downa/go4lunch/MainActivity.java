@@ -37,6 +37,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     int RC_SIGN_IN = 0;
     CallbackManager callbackManager;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
         public void onStart() {
             super.onStart();
             FirebaseUser currentUser = fireBaseAuth.getCurrentUser();
-            updateUI(currentUser);
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
@@ -143,10 +144,8 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = fireBaseAuth.getCurrentUser();
-                            updateUI(user);
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
                         }
                     }
                 });
@@ -163,12 +162,10 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = fireBaseAuth.getCurrentUser();
-                            updateUI(user);
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
                     }
                 });
