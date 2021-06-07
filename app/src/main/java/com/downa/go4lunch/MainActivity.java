@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
+                Toast.makeText(this, "Authentication  failed", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -66,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        if (FirebaseAuth.getInstance().getCurrentUser()!=null){
-            //TODO
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
         }
 
         initGoogleConnect();
@@ -102,11 +104,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 Log.d(TAG, "facebook:onCancel");
+                Toast.makeText(MainActivity.this, "Authentication cancel", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
+                Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithCredential:success");
                     } else {
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
