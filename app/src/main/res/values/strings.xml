@@ -7,6 +7,4 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCQqtTNs-BwXnWbWEQadfZ1ofvRoGHuSrI</string>
     <string name="facebook_app_id">485193632758229</string> <string name="fb_login_protocol_scheme">fb485193632758229</string>
 
-
-
 </resources>
