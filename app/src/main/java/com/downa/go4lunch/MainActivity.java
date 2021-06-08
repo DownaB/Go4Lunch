@@ -113,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
     }
 
     private void signInGoogle() {
